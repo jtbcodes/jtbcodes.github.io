@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jason's Page - Clicker Game</title>
+<!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> -->
+<style>
+.center {
+  margin:0 auto; display:block;
+}
+</style>
+</head>
+<body>
+  <main class="container">
+    <h1>Clicker Game</h1>
+    <div style="font-size: 50px" id="clicks"></div>
+    <div>
+      <button style="width: 250px; height: 100px; margin-top: 10px; font-size: 80px; border-radius: 10px; background-color: red; border-color: transparent;" onclick="mainClick()">Click</button>
+    </div>
+    <div>
+      <button style="width: 200px; height: 80px; margin-top: 10px; font-size: 20px; border-radius: 10px; background-color: rgb(255, 136, 0); border-color: transparent;" onclick="capacityUpgrade()"><div>Capacity Upgrade</div> Cost: <span id="capacityCost"></span></button>
+      <span style="font-size: 50px" id="capacity"></span>
+    </div>
+    <div>
+      <button style="width: 150px; height: 80px; margin-top: 10px; font-size: 20px; border-radius: 10px; background-color: rgb(255, 251, 0); border-color: transparent;" onclick="buyClicker()"><div>Clickers</div> Cost: <span id="clickersCost"></span></button>
+      <span style="font-size: 50px" id="clickers"></span>
+    </div>
+    <div style="margin-top: 100px">Note: This game is still in progress.</div>
+    <script>
+      let clicks = 0;
+      let capacity = 1;
+      let capacityCost = 50;
+      let clickers = 0;
+      let clickerCost = 75;
+
+      function update() {
+        document.getElementById("clicks").innerText = ""+clicks;
+        document.getElementById("capacity").innerText = ""+capacity;
+        document.getElementById("clickers").innerText = ""+clickers;
+        document.getElementById("capacityCost").innerText = ""+capacityCost;
+        document.getElementById("clickersCost").innerText = ""+clickerCost;
+      }
+      update();
+
+      function mainClick() {
+        clicks += capacity;
+        update();
+      }
+
+      function capacityUpgrade() {
+        if (clicks >= capacityCost) {
+          capacity += 1;
+          clicks -= capacityCost;
+          capacityCost *= 2;
+        }
+        update();
+      }
+
+      function buyClicker() {
+        if (clicks >= clickerCost) {
+          clickers += 1;
+          clicks -= clickerCost;
+          clickerCost *= 1.5;
+          clickerCost = Math.floor(clickerCost);
+        }
+        update();
+      }
+
+      setInterval(() => {
+        clicks += capacity * clickers;
+        update();
+      }, 3000);
+    </script>
+
+  </main>
+</body>
+</html>
